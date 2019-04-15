@@ -10,6 +10,7 @@ remote-cert-tls server
 compress lz4
 verb 3
 ;mute 20
+allow-pull-fqdn
 ca ca.crt
 cert {{ item }}.crt
 key {{ item }}.key

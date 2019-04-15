@@ -20,10 +20,19 @@
     mode: 0644
   with_items: "{{ VpnClients }}"
 
+- name: Make an ovpn copy of the client files
+  copy:
+    src: /etc/openvpn/easy-rsa/keys/{{ ServerName }}-{{ item }}.conf
+    dest: /etc/openvpn/easy-rsa/keys/{{ ServerName }}-{{ item }}.ovpn
+    mode: 0644
+    remote_src: yes
+  with_items: "{{ VpnClients }}"
+
 - name: Create tar for client configuration
   archive:
     path:
       - /etc/openvpn/easy-rsa/keys/{{ ServerName }}-{{ item }}.conf
+      - /etc/openvpn/easy-rsa/keys/{{ ServerName }}-{{ item }}.ovpn
       - /etc/openvpn/easy-rsa/keys/{{ item }}.key
       - /etc/openvpn/easy-rsa/keys/{{ item }}.crt
       - /etc/openvpn/easy-rsa/keys/ca.crt
